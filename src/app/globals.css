@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* sticky header(64/72px) 만큼 앵커 이동 위치 보정 */
+    scroll-padding-top: 5rem;
+    background: #07070c;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-vibe-bg font-sans text-white antialiased;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  ::selection {
+    background: rgba(108, 92, 231, 0.45);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #00cec9;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
