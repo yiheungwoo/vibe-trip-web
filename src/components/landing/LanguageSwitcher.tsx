@@ -15,7 +15,9 @@ export default function LanguageSwitcher({ locale, label }: LanguageSwitcherProp
 
   const change = (next: Locale) => {
     if (next === locale) return;
-    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
+    // `secure` only over HTTPS, so the toggle still works on a plain-http local dev server.
+    const secure = window.location.protocol === "https:" ? "; secure" : "";
+    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax${secure}`;
     router.push(`/${next}${window.location.hash}`, { scroll: false });
   };
 

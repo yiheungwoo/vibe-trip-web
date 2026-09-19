@@ -59,8 +59,8 @@ export default function FaqSection({ dict }: { dict: Dictionary["faq"] }) {
 
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger -- static FAQ data serialized as JSON-LD
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        // eslint-disable-next-line react/no-danger -- static FAQ data serialized as JSON-LD; "<" is escaped so a "</script>" in a string can never end the block
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
     </section>
   );
