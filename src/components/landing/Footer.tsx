@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import type { Dictionary } from "@/i18n";
-import { COMPANY, LEGAL_LINKS } from "@/lib/site";
+import { COMPANY } from "@/lib/site";
 import Container from "./Container";
+import LegalLinks from "./LegalLinks";
 
 export default function Footer({ dict }: { dict: Dictionary["footer"] }) {
   const rows: { label: string; value: string }[] = [
@@ -50,17 +51,7 @@ export default function Footer({ dict }: { dict: Dictionary["footer"] }) {
           <p className="text-[12px] text-white/35">
             © {new Date().getFullYear()} {dict.brand}. {dict.rightsReserved}
           </p>
-          <nav aria-label={dict.legalNavAria} className="flex items-center gap-5 text-[12.5px]">
-            <a href={LEGAL_LINKS.terms} className="text-white/60 transition-colors hover:text-white">
-              {dict.terms}
-            </a>
-            <a
-              href={LEGAL_LINKS.privacy}
-              className="font-semibold text-white/75 transition-colors hover:text-white"
-            >
-              {dict.privacy}
-            </a>
-          </nav>
+          <LegalLinks dict={dict} />
         </div>
       </Container>
     </footer>

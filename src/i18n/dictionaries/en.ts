@@ -1,5 +1,6 @@
 import { PATENT_APPLICATION_NO } from "@/lib/site";
 import type { Dictionary } from "./ko";
+import legalEn from "./legal.en";
 
 const en: Dictionary = {
   meta: {
@@ -334,6 +335,7 @@ const en: Dictionary = {
     terms: "Terms of Service",
     privacy: "Privacy Policy",
     legalNavAria: "Terms and policies",
+    legal: legalEn,
   },
 };
 

@@ -1,4 +1,5 @@
 import { PATENT_APPLICATION_NO, type NavId } from "@/lib/site";
+import legalKo from "./legal.ko";
 
 const patentNo = `제${PATENT_APPLICATION_NO}호`;
 
@@ -318,6 +319,7 @@ const ko = {
     terms: "이용약관",
     privacy: "개인정보처리방침",
     legalNavAria: "약관 및 정책",
+    legal: legalKo,
   },
 };
 

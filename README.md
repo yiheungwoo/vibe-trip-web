@@ -39,14 +39,14 @@ npm run deploy      # 빌드 후 Cloudflare에 수동 배포 (wrangler login 필
 | 4 | `HowItWorksSection` | `#how-it-works` | Pre-Trip → On-Trip → Post-Trip 인터랙티브 스텝 (탭) |
 | 5 | `PassOffsetSection` | `#pass` | 1회 여정 패스 + 일정 공유 후 공유받은 사람이 회원가입하면 공유한 사람에게 여정 패스권 무료 지급 (제휴 예약 100% 환급 프로모션은 주석 처리 — 재개 시 `PassOffsetSection.tsx`와 `src/i18n/dictionaries/{ko,en}.ts`의 `PROMO (paused)` 블록 복원) |
 | 6 | `FaqSection` + `FaqAccordion` | `#faq` | FAQ 아코디언, 신뢰 카드, FAQPage JSON-LD |
-| — | `Footer` | — | 사업자 정보, 특허 출원 번호, 약관 링크 |
+| — | `Footer` + `LegalLinks` + `LegalDialog` | — | 사업자 정보, 특허 출원 번호, 이용약관·개인정보처리방침 (클릭 시 모달 팝업) |
 
 공통 컴포넌트: `Reveal`(스크롤 진입 fade-in-up), `MotionProvider`(reduced-motion 대응), `Container`, `SectionHeading`, `Lines`(제목 줄바꿈), `StoreButtons`.
 
 ### 서버/클라이언트 경계
 
 섹션은 기본적으로 서버 컴포넌트이며, 인터랙션이 필요한 파일만 `"use client"`입니다
-(`Header`, `LanguageSwitcher`, `HowItWorksSection`, `FaqAccordion`, `Reveal`, `MotionProvider`).
+(`Header`, `LanguageSwitcher`, `HowItWorksSection`, `FaqAccordion`, `LegalLinks`, `LegalDialog`, `Reveal`, `MotionProvider`).
 스크롤 애니메이션은 `Reveal`로 감싸서 적용합니다.
 
 ```tsx
@@ -62,6 +62,7 @@ npm run deploy      # 빌드 후 Cloudflare에 수동 배포 (wrangler login 필
 | `src/i18n/config.ts` | 지원 언어, 기본 언어(`ko`), 쿠키 이름, Accept-Language 판별 |
 | `src/i18n/dictionaries/ko.ts` | **모든 문구의 원본이자 타입 정의** (`Dictionary`) |
 | `src/i18n/dictionaries/en.ts` | 영어 번역. `Dictionary` 타입을 따르므로 누락되면 빌드가 실패합니다 |
+| `src/i18n/dictionaries/legal.{ko,en}.ts` | 이용약관·개인정보처리방침 전문(푸터 모달). 한국어가 원본이며 `TERMS_OF_SERVICE.md` / `PRIVACY_POLICY.md`와 함께 갱신합니다. 구조 타입은 `src/i18n/legal-types.ts` |
 | `worker/index.ts` | 배포 환경(Cloudflare Worker)에서 `/` 접속 시 `/ko` 또는 `/en`으로 이동 |
 | `src/app/[locale]/` | 언어별 레이아웃(`<html lang>`, 메타데이터)과 페이지 |
 
@@ -98,7 +99,6 @@ npm run deploy      # 빌드 후 Cloudflare에 수동 배포 (wrangler login 필
 | 사이트 도메인 | GitHub 변수 `SITE_URL` (빌드 시 `NEXT_PUBLIC_SITE_URL`로 전달) | 미설정 시 `https://www.vibetrip.co.kr` (운영 도메인, 확정) |
 | Cloudflare 시크릿 · 커스텀 도메인 | GitHub 시크릿 `CLOUDFLARE_API_TOKEN` · `CLOUDFLARE_ACCOUNT_ID`, `wrangler.jsonc` `routes` | 미설정 ([docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) 참고) |
 | App Store / Google Play URL | `src/lib/site.ts` → `STORE_LINKS` | `#download` |
-| 이용약관 · 개인정보처리방침 URL | `src/lib/site.ts` → `LEGAL_LINKS` | `#` |
 | FAQ 환불 규정 · 패스권 지급 조건 답변 | `src/i18n/dictionaries/{ko,en}.ts` → `faq.items` | 일반 문구 (확정 정책으로 교체 필요) |
 | 패스권 지급 세부 조건 (지급 시점, 수량, 횟수 제한 등) | `src/i18n/dictionaries/{ko,en}.ts` → `pass.rewardCard.note` | "세부 조건은 앱 내 안내" 문구 |
 

@@ -1,7 +1,7 @@
 /**
  * Locale-independent landing page constants.
  * Only values grounded in the CLAUDE.md Fact Sheet are final; anything unconfirmed
- * (store URLs, business info, legal URLs) stays as a TODO placeholder below.
+ * (store URLs, business info) stays as a TODO placeholder below.
  */
 
 /** Section anchors, in nav order. Labels live in the i18n dictionaries (header.nav). */
@@ -19,12 +19,6 @@ export const STORE_LINKS = {
  * Stored without locale formatting; the Korean dictionary wraps it as "제…호".
  */
 export const PATENT_APPLICATION_NO = "10-2026-0139069";
-
-/** TODO: replace with the Terms of Service / Privacy Policy URLs once confirmed */
-export const LEGAL_LINKS = {
-  terms: "#",
-  privacy: "#",
-} as const;
 
 /**
  * Locale-neutral company info.

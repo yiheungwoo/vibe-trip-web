@@ -43,11 +43,21 @@ const config: Config = {
           "0%,100%": { opacity: "0.5" },
           "50%": { opacity: "0.9" },
         },
+        fadein: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        modalin: {
+          from: { opacity: "0", transform: "translateY(12px) scale(0.98)" },
+          to: { opacity: "1", transform: "none" },
+        },
       },
       animation: {
         float: "vtfloat 6s ease-in-out infinite",
         "float-slow": "vtfloat 7s 0.8s ease-in-out infinite",
         "pulse-dot": "vtpulse 1.4s ease-in-out infinite",
+        "fade-in": "fadein 0.2s ease-out",
+        "modal-in": "modalin 0.24s ease-out",
       },
     },
   },
