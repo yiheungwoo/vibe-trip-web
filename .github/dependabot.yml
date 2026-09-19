@@ -2,7 +2,7 @@ version: 2
 
 updates:
   # npm: patch/minor updates are grouped into one weekly PR. Major upgrades of the framework stack
-  # (Next, React, Tailwind, ESLint, TypeScript) are migrations, so they are not proposed automatically.
+  # (Next, React, Tailwind, ESLint, TypeScript, @types/node) are migrations, so they are not proposed automatically.
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -30,6 +30,9 @@ updates:
       - dependency-name: eslint-config-next
         update-types: [version-update:semver-major]
       - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      # Node typings must follow the runtime pinned in .nvmrc (22), not the newest major.
+      - dependency-name: "@types/node"
         update-types: [version-update:semver-major]
 
   # Keeps the SHA-pinned actions in .github/workflows current.
