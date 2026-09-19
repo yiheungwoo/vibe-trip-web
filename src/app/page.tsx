@@ -1,25 +1,7 @@
-import FaqSection from "@/components/landing/FaqSection";
-import Footer from "@/components/landing/Footer";
-import Header from "@/components/landing/Header";
-import HeroSection from "@/components/landing/HeroSection";
-import HowItWorksSection from "@/components/landing/HowItWorksSection";
-import PainSolutionSection from "@/components/landing/PainSolutionSection";
-import PassOffsetSection from "@/components/landing/PassOffsetSection";
-import UspBentoSection from "@/components/landing/UspBentoSection";
+import { redirect } from "next/navigation";
+import { DEFAULT_LOCALE } from "@/i18n/config";
 
-export default function Home() {
-  return (
-    <>
-      <Header />
-      <main>
-        <HeroSection />
-        <PainSolutionSection />
-        <UspBentoSection />
-        <HowItWorksSection />
-        <PassOffsetSection />
-        <FaqSection />
-      </main>
-      <Footer />
-    </>
-  );
+/** Fallback only: middleware normally redirects "/" to the visitor's locale before this runs. */
+export default function RootPage() {
+  redirect(`/${DEFAULT_LOCALE}`);
 }

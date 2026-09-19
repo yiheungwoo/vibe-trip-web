@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import type { FaqItem } from "./faq-data";
+import type { Dictionary } from "@/i18n";
 
-/** 한 번에 하나만 펼쳐지는 접근성 준수 아코디언 (button + aria-expanded/controls) */
+type FaqItem = Dictionary["faq"]["items"][number];
+
+/** Accessible accordion that opens one item at a time (button + aria-expanded/controls) */
 export default function FaqAccordion({ items }: { items: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
