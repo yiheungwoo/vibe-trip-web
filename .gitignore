@@ -33,6 +33,9 @@ pnpm-debug.log*
 .vercel
 .wrangler
 .open-next
+# Cloudflare local secrets for `wrangler dev`
+.dev.vars
+.dev.vars.*
 
 # editors and OS
 .DS_Store

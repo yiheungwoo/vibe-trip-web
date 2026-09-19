@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vibe-trip-web",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-01",
+
+  "assets": {
+    // Output of `next build` (output: "export").
+    "directory": "./out",
+    "binding": "ASSETS",
+    // Serve /ko from ko.html and redirect /ko/ -> /ko (matches the canonical URLs).
+    "html_handling": "drop-trailing-slash",
+    // Unknown paths get out/404.html with a real 404 status.
+    "not_found_handling": "404-page",
+    // Only "/" goes through the Worker (locale redirect); everything else is served straight from
+    // the asset store, which is what makes the security headers in public/_headers apply.
+    "run_worker_first": ["/"]
+  },
+
+  // Keep the workers.dev address on: branch previews and the CI smoke-test fallback use it.
+  "workers_dev": true,
+  // Per-version preview URLs (used for branch previews from CI).
+  "preview_urls": true,
+  "observability": { "enabled": true },
+
+  // The Worker already serves www.vibetrip.co.kr. Declaring it here makes this file the source of
+  // truth, so a deploy cannot silently detach the domain that was attached in the dashboard.
+  // (The API token needs Zone access for vibetrip.co.kr - see docs/DEPLOYMENT.md.)
+  "routes": [{ "pattern": "www.vibetrip.co.kr", "custom_domain": true }]
+}

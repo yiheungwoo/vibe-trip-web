@@ -1,0 +1,19 @@
+# Cloudflare Workers static assets: applied to every asset response (not to Worker-generated ones).
+# NOTE: script-src needs 'unsafe-inline' because the static export inlines Next.js hydration scripts,
+# and style-src needs it for inline styles set by Framer Motion. cdn.jsdelivr.net serves Pretendard.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+# Content-hashed build output never changes.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Un-hashed static files: cache briefly so a replaced file shows up within the hour.
+/assets/*
+  Cache-Control: public, max-age=3600
