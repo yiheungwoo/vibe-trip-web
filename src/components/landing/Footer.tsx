@@ -20,10 +20,10 @@ export default function Footer({ dict }: { dict: Dictionary["footer"] }) {
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">
           <div className="max-w-md">
             <Image
-              src="/assets/vibetrip-logo-white.png"
+              src="/assets/vibetrip-logo-white-480.png"
               alt="Vibe Trip"
-              width={1998}
-              height={698}
+              width={480}
+              height={167}
               className="h-10 w-auto"
             />
             <p className="mt-4 text-[13.5px] leading-[1.75] text-white/45">{dict.tagline}</p>

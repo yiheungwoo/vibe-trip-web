@@ -88,10 +88,10 @@ export default function Header({ locale, dict }: HeaderProps) {
       <div className="relative mx-auto flex h-full max-w-page items-center justify-between gap-3 px-5 sm:px-6">
         <a href="#top" aria-label={dict.homeAria} className="flex shrink-0 items-center">
           <Image
-            src="/assets/vibetrip-logo-white.png"
+            src="/assets/vibetrip-logo-white-480.png"
             alt="Vibe Trip"
-            width={1998}
-            height={698}
+            width={480}
+            height={167}
             priority
             className="h-10 w-auto md:h-11"
           />
