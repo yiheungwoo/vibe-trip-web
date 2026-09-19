@@ -1,0 +1,228 @@
+name: CI/CD
+
+# verify  -> runs on every push (and on fork PRs): lint, type-check, build, smoke test in the real Workers runtime
+# deploy  -> runs only for pushes to main, and only after `verify` passed; smoke-tests production and
+#            rolls back automatically if that fails
+# preview -> runs for pushes to other branches and uploads a Cloudflare preview version (not production)
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One run per ref. A newer push cancels an older run of a feature branch, but never a run on main:
+# cancelling a deploy half-way is worse than queueing the next one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  WRANGLER_SEND_METRICS: "false"
+
+jobs:
+  verify:
+    name: Verify (lint, type-check, build, smoke test)
+    # Same-repo PR branches are already covered by their push event, so only fork PRs run here.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check the Worker
+        run: npm run typecheck
+
+      # Informational: known advisories in dependencies show up as a warning without blocking a deploy.
+      - name: Dependency audit
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Build static site
+        env:
+          # Origin used for canonical / hreflang / Open Graph URLs (falls back to the default when unset).
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+        run: npm run build
+
+      - name: Check build output
+        run: |
+          for f in out/ko.html out/en.html out/404.html out/_headers; do
+            test -s "$f" || { echo "::error::Expected build output is missing: $f"; exit 1; }
+          done
+
+      # Runs the exact Worker + assets configuration that production uses (no Cloudflare account needed).
+      - name: Smoke test (local Workers runtime)
+        run: |
+          npx wrangler dev --port 8787 --ip 127.0.0.1 > wrangler-dev.log 2>&1 &
+          echo $! > wrangler.pid
+          ./scripts/smoke-test.sh http://127.0.0.1:8787
+
+      - name: Show Worker log on failure
+        if: failure()
+        run: cat wrangler-dev.log || true
+
+      - name: Stop local Worker
+        if: always()
+        run: kill "$(cat wrangler.pid)" 2>/dev/null || true
+
+      # The deploy job ships this exact build output, so what was tested is what goes live.
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: site
+          path: out
+          retention-days: 7
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy to Cloudflare (production)
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    # Deploys never overlap and are never cancelled mid-flight.
+    concurrency:
+      group: production-deploy
+      cancel-in-progress: false
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - name: Check Cloudflare credentials
+        id: creds
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Deploy skipped::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID secrets are not set. See docs/DEPLOYMENT.md."
+            echo "### ⚠️ Deploy skipped" >> "$GITHUB_STEP_SUMMARY"
+            echo "The \`CLOUDFLARE_API_TOKEN\` and \`CLOUDFLARE_ACCOUNT_ID\` repository secrets are not set. Verification passed, but nothing was deployed. See \`docs/DEPLOYMENT.md\`." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.creds.outputs.configured == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - if: steps.creds.outputs.configured == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.creds.outputs.configured == 'true'
+        run: npm ci
+
+      - name: Download the verified build
+        if: steps.creds.outputs.configured == 'true'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: site
+          path: out
+
+      - name: Deploy
+        id: deploy
+        if: steps.creds.outputs.configured == 'true'
+        run: |
+          npx wrangler deploy --message "${GITHUB_SHA::7} - ${GITHUB_WORKFLOW}" 2>&1 | tee deploy.log
+          url="${SITE_URL:-$(grep -Eo 'https://[A-Za-z0-9._-]+\.workers\.dev' deploy.log | head -1)}"
+          if [ -z "$url" ]; then
+            echo "::error::Deployed, but could not determine the site URL. Set the SITE_URL repository variable."
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "### 🚀 Deployed" >> "$GITHUB_STEP_SUMMARY"
+          echo "$url (commit \`${GITHUB_SHA::7}\`)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke test production
+        id: smoke
+        if: steps.creds.outputs.configured == 'true'
+        env:
+          TARGET_URL: ${{ steps.deploy.outputs.url }}
+        run: ./scripts/smoke-test.sh "$TARGET_URL"
+
+      # Previous version goes back live in seconds; the failed run stays red so it is noticed.
+      - name: Roll back automatically
+        if: failure() && steps.smoke.outcome == 'failure'
+        run: |
+          echo "::error::Production smoke test failed - rolling back to the previous version"
+          npx wrangler rollback --yes --message "Auto-rollback: smoke test failed for ${GITHUB_SHA::7}"
+          echo "### 🔙 Rolled back" >> "$GITHUB_STEP_SUMMARY"
+          echo "The production smoke test failed for \`${GITHUB_SHA::7}\`, so the previous version was restored." >> "$GITHUB_STEP_SUMMARY"
+
+  preview:
+    name: Branch preview (Cloudflare)
+    needs: verify
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # A preview problem must never turn a good branch red.
+    continue-on-error: true
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Check Cloudflare credentials
+        id: creds
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "Preview skipped: Cloudflare secrets are not set." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.creds.outputs.configured == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - if: steps.creds.outputs.configured == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.creds.outputs.configured == 'true'
+        run: npm ci
+
+      - name: Download the verified build
+        if: steps.creds.outputs.configured == 'true'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: site
+          path: out
+
+      # `versions upload` creates a new Worker version without deploying it, so production is untouched.
+      - name: Upload preview version
+        if: steps.creds.outputs.configured == 'true'
+        run: |
+          # Alias must be lowercase letters/digits/dashes and start with a letter (Worker name + alias <= 63 chars).
+          alias="b-$(printf '%s' "$GITHUB_REF_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/-\{2,\}/-/g; s/^-//' | cut -c1-40)"
+          alias="${alias%-}"
+          npx wrangler versions upload --preview-alias "$alias" --message "Preview: ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}" 2>&1 | tee preview.log
+          echo "### 👀 Preview for \`${GITHUB_REF_NAME}\`" >> "$GITHUB_STEP_SUMMARY"
+          grep -Eo 'https://[A-Za-z0-9._-]+\.workers\.dev' preview.log | sort -u >> "$GITHUB_STEP_SUMMARY" || true

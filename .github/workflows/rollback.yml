@@ -1,0 +1,72 @@
+name: Rollback production
+
+# One-click rollback from the GitHub UI: Actions -> "Rollback production" -> Run workflow.
+# Leave `version_id` empty to go back to the previous version, or paste a Worker version id
+# (Cloudflare dashboard -> Workers -> vibe-trip-web -> Deployments, or `npx wrangler deployments list`).
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_id:
+        description: "Worker version id to restore (empty = previous version)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+env:
+  WRANGLER_SEND_METRICS: "false"
+
+jobs:
+  rollback:
+    name: Roll back Cloudflare Worker
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      VERSION_ID: ${{ inputs.version_id }}
+      SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - name: Validate input
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID secrets are not set. See docs/DEPLOYMENT.md."
+            exit 1
+          fi
+          if [ -n "$VERSION_ID" ] && ! printf '%s' "$VERSION_ID" | grep -Eq '^[0-9a-fA-F-]{36}$'; then
+            echo "::error::version_id must be a UUID (e.g. 1a2b3c4d-....)"
+            exit 1
+          fi
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Roll back
+        run: |
+          npx wrangler rollback ${VERSION_ID:+"$VERSION_ID"} --yes --message "Manual rollback by ${GITHUB_ACTOR}"
+          echo "### 🔙 Rolled back by ${GITHUB_ACTOR}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Target: ${VERSION_ID:-previous version}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke test after rollback
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            echo "SITE_URL variable is not set - skipping the post-rollback smoke test."
+            exit 0
+          fi
+          ./scripts/smoke-test.sh "$SITE_URL"
