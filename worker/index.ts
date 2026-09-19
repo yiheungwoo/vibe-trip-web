@@ -17,7 +17,14 @@ function readCookie(header: string | null, name: string): string | undefined {
   if (!header) return undefined;
   for (const part of header.split(";")) {
     const [key, ...rest] = part.trim().split("=");
-    if (key === name) return decodeURIComponent(rest.join("="));
+    if (key === name) {
+      try {
+        return decodeURIComponent(rest.join("="));
+      } catch {
+        // Malformed percent-encoding (e.g. "%E0%A4%A"): treat it as "no saved language" instead of failing the request.
+        return undefined;
+      }
+    }
   }
   return undefined;
 }
@@ -33,11 +40,11 @@ export default {
     const saved = readCookie(request.headers.get("Cookie"), LOCALE_COOKIE);
     const locale = isLocale(saved) ? saved : negotiateLocale(request.headers.get("Accept-Language"));
 
-    url.pathname = `/${locale}`; // query string is preserved
     return new Response(null, {
       status: 307,
       headers: {
-        Location: url.toString(),
+        // Relative on purpose: the target never depends on the Host header. The query string is preserved.
+        Location: `/${locale}${url.search}`,
         // The target depends on the cookie and Accept-Language, so it must never be shared from a cache.
         "Cache-Control": "private, no-store",
         Vary: "Accept-Language, Cookie",

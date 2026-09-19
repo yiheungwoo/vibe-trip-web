@@ -54,6 +54,8 @@ equals   "Accept-Language ko -> /ko"             "$(location -H 'Accept-Language
 equals   "unsupported language falls back to ko" "$(location -H 'Accept-Language: fr' "$BASE/")" "$BASE/ko"
 equals   "cookie beats Accept-Language"          "$(location -H 'Cookie: NEXT_LOCALE=en' -H 'Accept-Language: ko' "$BASE/")" "$BASE/en"
 equals   "invalid cookie is ignored"             "$(location -H 'Cookie: NEXT_LOCALE=xx' -H 'Accept-Language: en' "$BASE/")" "$BASE/en"
+equals   "malformed cookie does not break the redirect" "$(status -H 'Cookie: NEXT_LOCALE=%E0%A4%A' "$BASE/")" "307"
+equals   "redirect Location is relative (no host echo)" "$(header location "$BASE/")" "/ko"
 equals   "query string is preserved"             "$(location "$BASE/?utm_source=test")" "$BASE/ko?utm_source=test"
 contains "redirect is never cached"              "$(header cache-control "$BASE/")" "no-store"
 contains "redirect varies on language/cookie"    "$(header vary "$BASE/")" "Accept-Language"
