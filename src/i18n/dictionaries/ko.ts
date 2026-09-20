@@ -45,7 +45,7 @@ const ko = {
     titlePrefix: "현지에서는",
     titleGradient: "내 손안의 AI 밀착 가이드",
     description:
-      "수십 개의 탭을 오가던 여행 준비는 이제 그만. AI 플래닝부터 바우처 자동 정리, 실시간 위치 기반 현지 케어까지 바이브트립 하나로 끝내세요.",
+      "앱 서너 개를 오가던 여행 준비는 이제 그만. AI 플래닝부터 바우처 자동 정리, 실시간 위치 기반 현지 케어까지 바이브트립 하나로 끝내세요.",
     trustPoints: ["여행 일정 자동 생성", "여정 실시간 케어", "바우처 자동 정리", "내 일정 상품화(C2C)"],
   },
 
@@ -69,7 +69,7 @@ const ko = {
 
   painSolution: {
     eyebrow: "Pain & Solution",
-    titleLines: ["여행 준비, 아직도 탭 수십 개로", "하고 계신가요?"],
+    titleLines: ["여행 준비, 아직도 앱 서너 개를", "왔다 갔다 하고 계신가요?"],
     description: "흩어진 예약 정보와 끝없는 검색 대신, 바이브트립이 한 화면에서 정리합니다.",
     before: {
       badge: "BEFORE",

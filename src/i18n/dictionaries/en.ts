@@ -40,7 +40,7 @@ const en: Dictionary = {
     titlePrefix: "then explore with",
     titleGradient: "your AI guide",
     description:
-      "No more juggling dozens of tabs. From AI planning and automatic voucher organizing to real-time, location-based care on the ground — Vibe Trip does it all in one app.",
+      "No more hopping between a few apps. From AI planning and automatic voucher organizing to real-time, location-based care on the ground — Vibe Trip does it all in one app.",
     trustPoints: [
       "Auto-generated itineraries",
       "Real-time trip care",
@@ -69,7 +69,7 @@ const en: Dictionary = {
 
   painSolution: {
     eyebrow: "Pain & Solution",
-    titleLines: ["Still planning your trip", "with dozens of tabs open?"],
+    titleLines: ["Still planning your trip", "hopping between a few apps?"],
     description: "Instead of scattered bookings and endless searching, Vibe Trip organizes everything on one screen.",
     before: {
       badge: "BEFORE",
