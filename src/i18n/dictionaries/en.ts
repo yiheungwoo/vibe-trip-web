@@ -9,6 +9,7 @@ const en: Dictionary = {
       "From AI planning and automatic voucher organizing to real-time, location-based care on the ground. Finish your trip prep in 3 minutes with Vibe Trip.",
     keywords: ["Vibe Trip", "AI travel planner", "trip itinerary", "voucher OCR", "travel app"],
     ogLocale: "en_US",
+    ogImageAlt: "Vibe Trip logo — a compass rose with an airplane",
   },
 
   header: {

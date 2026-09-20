@@ -5,6 +5,9 @@ import { LOCALES, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
 import "../globals.css";
 
+// Shared social preview image (1200x630), resolved against metadataBase into an absolute URL.
+const OG_IMAGE = { url: "/assets/og-image.jpg", width: 1200, height: 630 } as const;
+
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
@@ -34,11 +37,13 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
       title: meta.title,
       description: meta.description,
       url: `/${params.locale}`,
+      images: [{ ...OG_IMAGE, alt: meta.ogImageAlt }],
     },
     twitter: {
       card: "summary_large_image",
       title: meta.title,
       description: meta.description,
+      images: [{ url: OG_IMAGE.url, alt: meta.ogImageAlt }],
     },
   };
 }

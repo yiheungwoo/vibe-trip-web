@@ -71,6 +71,9 @@ contains "/ko has hreflang alternates"           "$ko_html" 'hrefLang="en"'
 contains "/en has hreflang alternates"           "$en_html" 'hrefLang="ko"'
 contains "/ko is Korean content"                 "$ko_html" '대화 한 번으로'
 contains "/en is English content"                "$en_html" 'Plan in one chat'
+contains "/ko has og:image (absolute URL)"       "$ko_html" 'property="og:image" content="https://'
+contains "/en has og:image"                      "$en_html" 'property="og:image"'
+contains "/ko has twitter:image"                 "$ko_html" 'name="twitter:image"'
 contains "/ko has FAQ JSON-LD"                   "$ko_html" 'FAQPage'
 contains "/ko patent number present"             "$ko_html" '10-2026-0139069'
 if [[ "$en_html" == *"Patent Granted"* || "$ko_html" == *"특허 등록"* ]]; then
@@ -110,6 +113,8 @@ else
 fi
 equals   "logo returns 200"                      "$(status "$BASE/assets/vibetrip-logo-white-480.png")" "200"
 contains "logo is an image"                      "$(header content-type "$BASE/assets/vibetrip-logo-white-480.png")" "image/png"
+equals   "OG image returns 200"                  "$(status "$BASE/assets/og-image.jpg")" "200"
+contains "OG image is a JPEG"                    "$(header content-type "$BASE/assets/og-image.jpg")" "image/jpeg"
 code="$(status "$BASE/_headers")"
 if [[ "$code" == "200" ]]; then bad "_headers config file is not publicly served" "GET /_headers returned 200"; else ok "_headers config file is not publicly served"; fi
 

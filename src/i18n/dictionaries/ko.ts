@@ -14,6 +14,7 @@ const ko = {
       "AI 플래닝부터 바우처 자동 정리, 실시간 위치 기반 현지 케어까지. 바이브트립 하나로 여행 준비를 3분 만에 끝내세요.",
     keywords: ["바이브트립", "Vibe Trip", "AI 여행 플래너", "여행 일정", "바우처 OCR", "여행 앱"],
     ogLocale: "ko_KR",
+    ogImageAlt: "바이브트립(Vibe Trip) 로고 — 나침반과 비행기 심볼",
   },
 
   header: {
