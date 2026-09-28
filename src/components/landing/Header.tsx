@@ -7,6 +7,7 @@ import { Download, Menu, X } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n";
 import { NAV_IDS } from "@/lib/site";
+import { showLaunchDialog } from "./LaunchDialog";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 const CTA_CLASS =
@@ -124,7 +125,14 @@ export default function Header({ locale, dict }: HeaderProps) {
         <div className="flex shrink-0 items-center gap-2 md:gap-3">
           <LanguageSwitcher locale={locale} label={dict.languageAria} />
 
-          <a href="#download" className={`${CTA_CLASS} hidden md:inline-flex`}>
+          <a
+            href="#download"
+            onClick={(e) => {
+              e.preventDefault();
+              showLaunchDialog();
+            }}
+            className={`${CTA_CLASS} hidden md:inline-flex`}
+          >
             <Download className="h-3.5 w-3.5" aria-hidden />
             {dict.downloadApp}
           </a>
@@ -184,7 +192,11 @@ export default function Header({ locale, dict }: HeaderProps) {
                 </ul>
                 <a
                   href="#download"
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                    showLaunchDialog();
+                  }}
                   className={`${CTA_CLASS} mt-4 w-full py-3.5 text-[15px]`}
                 >
                   <Download className="h-4 w-4" aria-hidden />

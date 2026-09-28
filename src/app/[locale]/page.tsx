@@ -4,6 +4,7 @@ import Footer from "@/components/landing/Footer";
 import Header from "@/components/landing/Header";
 import HeroSection from "@/components/landing/HeroSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import LaunchDialog from "@/components/landing/LaunchDialog";
 import PainSolutionSection from "@/components/landing/PainSolutionSection";
 import PassOffsetSection from "@/components/landing/PassOffsetSection";
 import UspBentoSection from "@/components/landing/UspBentoSection";
@@ -36,6 +37,7 @@ export default function Home({ params }: { params: { locale: string } }) {
         <FaqSection dict={dict.faq} />
       </main>
       <Footer dict={dict.footer} />
+      <LaunchDialog dict={dict.store.launchDialog} />
     </>
   );
 }

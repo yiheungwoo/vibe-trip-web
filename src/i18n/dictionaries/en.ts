@@ -32,6 +32,11 @@ const en: Dictionary = {
   store: {
     appStore: "Download on the App Store",
     googlePlay: "Get it on Google Play",
+    launchDialog: {
+      title: "Launching Oct 14, 2026",
+      body: "The Vibe Trip app will be available on the App Store and Google Play from October 14.",
+      confirm: "OK",
+    },
   },
 
   hero: {
@@ -318,18 +323,15 @@ const en: Dictionary = {
     patentStatus: "(patent pending)",
     brand: "Vibe Trip",
     rightsReserved: "All rights reserved.",
-    // TODO: replace the placeholders with the real company info.
     company: {
       legalName: "Vibe Trip",
-      ceo: "[Enter CEO name]",
-      mailOrderNo: "0000-Region-0000",
-      address: "[Enter business address]",
+      ceo: "Heejin Hong",
+      address: "30, Soejae-ro, Paju-si, Gyeonggi-do, Republic of Korea",
     },
     labels: {
       legalName: "Company",
       ceo: "CEO",
       businessNo: "Business registration no.",
-      mailOrderNo: "Mail-order business report no.",
       address: "Address",
       support: "Customer support",
     },
