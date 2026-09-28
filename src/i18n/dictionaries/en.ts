@@ -32,6 +32,11 @@ const en: Dictionary = {
   store: {
     appStore: "Download on the App Store",
     googlePlay: "Get it on Google Play",
+    launchDialog: {
+      title: "Launching Oct 14, 2026",
+      body: "The Vibe Trip app will be available on the App Store and Google Play from October 14.",
+      confirm: "OK",
+    },
   },
 
   hero: {

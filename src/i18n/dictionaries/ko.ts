@@ -37,6 +37,11 @@ const ko = {
   store: {
     appStore: "App Store에서 다운로드",
     googlePlay: "Google Play에서 다운로드",
+    launchDialog: {
+      title: "2026.10.14. 서비스 오픈",
+      body: "바이브트립 앱은 10월 14일부터 App Store와 Google Play에서 만나보실 수 있어요.",
+      confirm: "확인",
+    },
   },
 
   hero: {
