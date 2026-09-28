@@ -302,18 +302,15 @@ const ko = {
     patentStatus: "(특허 출원 중)",
     brand: "Vibe Trip (바이브트립)",
     rightsReserved: "All rights reserved.",
-    // TODO: replace the placeholders with the real company info.
     company: {
       legalName: "바이브 트립",
-      ceo: "[대표자명 입력]",
-      mailOrderNo: "제0000-지역-0000호",
-      address: "[사업장 주소 입력]",
+      ceo: "홍희진",
+      address: "경기 파주 쇠재로30",
     },
     labels: {
       legalName: "상호",
       ceo: "대표자",
       businessNo: "사업자등록번호",
-      mailOrderNo: "통신판매업 신고번호",
       address: "주소",
       support: "고객센터",
     },

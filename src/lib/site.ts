@@ -1,7 +1,7 @@
 /**
  * Locale-independent landing page constants.
  * Only values grounded in the CLAUDE.md Fact Sheet are final; anything unconfirmed
- * (store URLs, business info) stays as a TODO placeholder below.
+ * (store URLs) stays as a TODO placeholder below.
  */
 
 /** Section anchors, in nav order. Labels live in the i18n dictionaries (header.nav). */
@@ -22,11 +22,10 @@ export const PATENT_APPLICATION_NO = "10-2026-0139069";
 
 /**
  * Locale-neutral company info.
- * TODO: replace the placeholder with the real business registration number.
- * Locale-specific values (legal name, CEO, address, mail-order no.) live in the dictionaries
+ * Locale-specific values (legal name, CEO, address) live in the dictionaries
  * under footer.company.
  */
 export const COMPANY = {
-  businessNo: "000-00-00000",
+  businessNo: "607-35-56423",
   contactEmail: "support@vibetrip.co.kr",
 } as const;

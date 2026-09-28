@@ -10,7 +10,6 @@ export default function Footer({ dict }: { dict: Dictionary["footer"] }) {
     { label: dict.labels.legalName, value: dict.company.legalName },
     { label: dict.labels.ceo, value: dict.company.ceo },
     { label: dict.labels.businessNo, value: COMPANY.businessNo },
-    { label: dict.labels.mailOrderNo, value: dict.company.mailOrderNo },
     { label: dict.labels.address, value: dict.company.address },
     { label: dict.labels.support, value: COMPANY.contactEmail },
   ];
