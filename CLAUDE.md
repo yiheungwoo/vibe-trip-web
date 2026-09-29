@@ -15,7 +15,7 @@
   * Hybrid Voucher Parsing via Gemini Vision OCR (Flight, Hotel, Transit).
   * Real-time Proactive Location/Time-based Care & Docent Push.
   * Vertical Itinerary Timeline with automatic transit/route recomputation.
-  * C2C Marketplace ("Vibe Pick") with creator rebate wallet.
+  * C2C itinerary-sharing marketplace ("Vibe Pick"): itineraries with many likes/adoptions (좋아요/채택) earn company-provided prizes or rewards. There is NO rebate wallet or cash withdrawal — never promise earnings, rebates or payouts.
   * Country-gated mobility deep link (Uber for KR/Global, Grab for Southeast Asia 6 countries: VN/TH/SG/MY/PH/ID).
 - In-progress / Legal status:
   * Patent Pending (특허 출원 중: 실시간 컨텍스트 엔진 및 이종 데이터 파싱). Do NOT claim "Patent Granted".
@@ -40,7 +40,7 @@ The same applies to this repo's own `CLAUDE.md`/`AGENTS.md` files: write new/upd
 Product-facing text is a separate matter: the site is bilingual (Korean default at `/ko`, English at `/en`) and all user-visible strings live in the i18n dictionaries, not in components.
 - `src/i18n/dictionaries/ko.ts` is the source of truth and defines the `Dictionary` type; `en.ts` must satisfy the same type, so a missing translation fails the build.
 - Every new or changed UI string (labels, aria-labels, metadata, FAQ answers, error text) must be added to **both** dictionaries in the same change. Never hard-code visible text in a component, and never leave a language untranslated.
-- English copy must obey the Fact Sheet like the Korean copy: patent is "pending"/"application", never "granted"; use the established terms (Single-Trip Pass, Vibe Pick, Voucher OCR, Rebate Wallet).
+- English copy must obey the Fact Sheet like the Korean copy: patent is "pending"/"application", never "granted"; use the established terms (Single-Trip Pass, Vibe Pick, Voucher OCR, likes & adoptions, prizes & rewards).
 - Commit messages and PR text stay Korean per the Git guidelines above.
 
 # Language & Output Rules
