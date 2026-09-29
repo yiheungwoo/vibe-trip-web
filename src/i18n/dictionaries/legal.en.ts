@@ -34,7 +34,7 @@ const legalEn: LegalContent = {
               "**“Paid Pass”** means a digital entitlement (Short Trip Pass, Long Trip Pass, Annual Unlimited Pass, Daily Extension Pass, etc.) that a Member purchases in advance to use paid features such as the AI Guide.",
               "**“AI Guide (Proactive Guide)”** means the feature that provides proactive notifications (Push) and real-time Q&A during a Member’s trip, based on location (GPS), local time and the itinerary the Member has registered.",
               "**“Vibe Pick (also called Members’ Pick / itinerary marketplace)”** means the C2C content area where Members can register itineraries they created and traveled, and share them with or let them be copied by other Members.",
-              "**“Rebate”** means reward points calculated and credited to the original author under the platform’s policy when another Member copies a registered itinerary or completes a partner booking.",
+              "**“Reward”** means a benefit, such as a trip pass or a prize, that the Company provides through an event to a Member who authored a Vibe Pick itinerary.",
             ],
           },
         ],
@@ -62,7 +62,7 @@ const legalEn: LegalContent = {
             items: [
               "The agreement is formed when an applicant agrees to these Terms and the Privacy Policy, applies to sign up through a social login supported by the Company (Kakao, Apple, Google, etc.), and the Company accepts the application.",
               "In principle, the Company permits sign-up only by persons aged 14 or older and may restrict sign-up by children under 14.",
-              "Members use a **nickname** as their identifier within the Service. Real names are verified only at specific points required by law, such as tax withholding and payout withdrawals.",
+              "Members use a **nickname** as their identifier within the Service. Real names are verified only where required by law.",
             ],
           },
         ],
@@ -196,7 +196,7 @@ const legalEn: LegalContent = {
         ],
       },
       {
-        chapter: "Chapter 5. C2C Itinerary Marketplace and Rebate Settlement",
+        chapter: "Chapter 5. C2C Itinerary Marketplace and Creator Rewards",
         heading: "Article 11 (Marketplace Registration of Itineraries and Copyright)",
         blocks: [
           {
@@ -210,15 +210,15 @@ const legalEn: LegalContent = {
         ],
       },
       {
-        heading: "Article 12 (Rebate Accrual and Withdrawal)",
+        heading: "Article 12 (Creator Rewards)",
         blocks: [
           {
             type: "ol",
             items: [
-              "When another Member adopts or copies an author’s shared itinerary and a partner booking or similar event occurs, the Company credits a Rebate to the original author’s Rebate Wallet (My Rebate Wallet) at the set distribution rate.",
-              "When a Member applies to withdraw accrued Rebates in cash, the Company requires **verification of the Member’s legal real name and unique identification information such as the resident registration number, and verification of an account in the Member’s own name, in order to fulfill withholding tax obligations and prevent financial incidents** under the relevant tax laws (such as the Income Tax Act).",
-              "If a Member has not completed valid real-name verification, or the account is not in the Member’s own name, payment of the settlement may be withheld.",
-              "Rebates obtained through improper means such as fraudulent clicks, abuse or the use of macros may be cancelled or recovered.",
+              "The Company may select, through events, Members whose itineraries on Vibe Pick have been adopted by many other Members, and provide them with Rewards such as trip passes or prizes. The eligible period, selection criteria and Rewards are set out in each event notice.",
+              "No monetary earnings (rebates) accrue from adoptions, and nothing is paid out or withdrawn in cash on that basis.",
+              "Where providing a prize gives rise to obligations such as tax withholding under applicable tax law, the Company will set out the required information and procedure in advance in the relevant event notice.",
+              "Where the number of adoptions has been inflated by improper means such as multiple accounts or macros, the Company may exclude the Member from selection or recover Rewards already provided.",
             ],
           },
         ],
@@ -231,7 +231,7 @@ const legalEn: LegalContent = {
             type: "ol",
             items: [
               "Members may request to withdraw from membership at any time through the in-app My Page settings, and the Company will process the request immediately as provided by applicable law.",
-              "Upon withdrawal, the Member’s free quota and remaining Pass entitlements expire immediately and cannot be restored. Rebates that have not been withdrawn must be applied for settlement before withdrawal.",
+              "Upon withdrawal, the Member’s free quota and remaining Pass entitlements expire immediately and cannot be restored.",
             ],
           },
         ],
@@ -294,11 +294,11 @@ const legalEn: LegalContent = {
                 "Building the timeline, flight/hotel time-difference alerts, local proactive guidance and docent",
               ],
               [
-                "**Earnings withdrawal**",
-                "When settling Rebates in cash",
-                "• Legal name (real name)\n• **Resident registration number (stored encrypted)**\n• Bank name and account number",
+                "**Event prizes**",
+                "When winning a prize",
+                "• Recipient name\n• Contact number\n• Delivery address",
                 "None",
-                "3.3% withholding tax reporting under the Income Tax Act, verifying the account holder’s real name, and paying out the settlement",
+                "Sending the prize (destroyed without delay once it has been delivered)",
               ],
             ],
           },
@@ -317,7 +317,7 @@ const legalEn: LegalContent = {
             items: [
               "**Providing the Service and performing the contract**: generating AI-personalized trip itineraries, editing itineraries, real-time local time/location-based Proactive Push guidance, attraction docent guidance, confirming in-app purchases and granting entitlements.",
               "**Member management**: identifying simple-login accounts, managing nickname-based community activity, preventing abuse, and responding to 1:1 customer support inquiries.",
-              "**C2C marketplace and Rebate settlement**: posting completed trips to Vibe Pick, calculating Rebates for copies, reporting withholding tax to the National Tax Service under tax law, and transferring withdrawals.",
+              "**C2C marketplace and events**: posting completed trips to Vibe Pick, selecting authors for adoption-based events, and sending prizes.",
               "**Service analysis and improvement**: improving AI recommendation performance and analyzing user statistics.",
             ],
           },
@@ -328,11 +328,7 @@ const legalEn: LegalContent = {
         blocks: [
           {
             type: "p",
-            text: "As a principle, the Company does not collect unique identification information such as the resident registration number at the general sign-up stage.",
-          },
-          {
-            type: "p",
-            text: "However, when a Member withdraws marketplace earnings (Rebates) in cash, the Company inevitably collects and processes the resident registration number in order to identify the taxpayer and meet its withholding tax reporting obligations under **Articles 145 (issuance of withholding receipts) and 164 (submission of payment statements) of the Income Tax Act and the Framework Act on National Taxes**. The collected identification information is stored separately using secure one-way/two-way encryption algorithms and is not used for any purpose other than settlement and tax reporting.",
+            text: "The Company does not collect unique identification information such as the resident registration number.",
           },
         ],
       },
@@ -347,7 +343,6 @@ const legalEn: LegalContent = {
             type: "ol",
             items: [
               "Where required by law, or where an investigative agency requests it for investigation purposes in accordance with the procedures and methods prescribed by law.",
-              "Tax reporting to the National Tax Service (only for users who withdraw earnings: name, resident registration number and income paid).",
               "Where the user moves to an external link to use a partner service (external OTA, ride-hailing, etc.) and provides information to a third party themselves (the third party’s privacy policy applies in that case).",
             ],
           },
@@ -370,10 +365,6 @@ const legalEn: LegalContent = {
                 "Sending push notifications (FCM), vision OCR parsing and AI Q&A processing",
               ],
               ["**RevenueCat, Inc.**", "Verifying in-app purchase (IAP) receipts and managing Paid Pass subscription status"],
-              [
-                "**NICE Information Service / Danal / KCB (once introduced)**",
-                "Identity verification and account ownership verification for withdrawal requests",
-              ],
             ],
           },
         ],
@@ -391,7 +382,6 @@ const legalEn: LegalContent = {
                   "**Records on contracts or withdrawal of purchase in e-commerce**: 5 years (Electronic Commerce Act)",
                   "**Records on payment and supply of goods**: 5 years (Electronic Commerce Act)",
                   "**Records on consumer complaints or dispute handling**: 3 years (Electronic Commerce Act)",
-                  "**Ledgers and payment statements on national taxes and withholding under tax law**: 5 years (Framework Act on National Taxes, Income Tax Act)",
                   "**Service access login records (logs)**: 3 months (Protection of Communications Secrets Act)",
                 ],
               },
@@ -421,7 +411,7 @@ const legalEn: LegalContent = {
           {
             type: "ol",
             items: [
-              "**Encryption of passwords and unique identification information**: Resident registration numbers and important financial information are encrypted (AES-256, etc.) when stored and managed.",
+              "**Encryption of passwords and other important information**: Passwords and other important information are encrypted when stored and managed.",
               "**Network security**: SSL/TLS encrypted communication is applied to every channel through which personal information is transmitted.",
               "**Access restriction**: Access rights to personal information processing systems are kept to a minimum and access control policies are strictly enforced.",
             ],
