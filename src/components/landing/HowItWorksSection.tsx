@@ -6,6 +6,9 @@ import {
   BedDouble,
   Car,
   Check,
+  CircleCheck,
+  Gift,
+  Heart,
   MapPin,
   Navigation,
   Plane,
@@ -13,7 +16,6 @@ import {
   Sparkles,
   Store,
   TrainFront,
-  Wallet,
   type LucideIcon,
 } from "lucide-react";
 import type { Dictionary } from "@/i18n";
@@ -28,7 +30,7 @@ type Dict = Dictionary["howItWorks"];
 const POINT_ICONS: LucideIcon[][] = [
   [Sparkles, ScanLine],
   [Navigation, Car],
-  [Store, Wallet],
+  [Store, Gift],
 ];
 
 export default function HowItWorksSection({ dict }: { dict: Dict }) {
@@ -290,14 +292,24 @@ function PostVisual({ v }: { v: Dict["visuals"]["post"] }) {
           </span>
         </div>
         <p className="mt-2 text-[11.5px] leading-[1.6] text-white/50">{v.description}</p>
+        <div className="mt-3 flex items-center gap-3 text-[11px] text-white/60">
+          <span className="flex items-center gap-1">
+            <Heart className="h-3.5 w-3.5 fill-vibe-tint/80 text-vibe-tint" aria-hidden />
+            {v.likes} <span className="font-semibold text-white">128</span>
+          </span>
+          <span className="flex items-center gap-1">
+            <CircleCheck className="h-3.5 w-3.5 text-vibe-cyan" aria-hidden />
+            {v.adoptions} <span className="font-semibold text-white">42</span>
+          </span>
+        </div>
       </div>
       <div className="flex items-center gap-3 rounded-xl border border-vibe-cyan/25 bg-vibe-cyan/[0.07] p-3.5">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-vibe-cyan/20">
-          <Wallet className="h-5 w-5 text-vibe-cyan" />
+          <Gift className="h-5 w-5 text-vibe-cyan" />
         </span>
         <div>
-          <div className="text-[12.5px] font-semibold text-white">{v.walletTitle}</div>
-          <div className="text-[11px] text-white/50">{v.walletSub}</div>
+          <div className="text-[12.5px] font-semibold text-white">{v.rewardTitle}</div>
+          <div className="text-[11px] text-white/50">{v.rewardSub}</div>
         </div>
       </div>
     </div>

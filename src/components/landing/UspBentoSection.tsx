@@ -3,6 +3,8 @@ import {
   BedDouble,
   BellRing,
   Check,
+  Gift,
+  Heart,
   Landmark,
   MapPin,
   Plane,
@@ -11,7 +13,6 @@ import {
   ScanLine,
   Store,
   TrainFront,
-  Wallet,
   type LucideIcon,
 } from "lucide-react";
 import type { Dictionary } from "@/i18n";
@@ -24,7 +25,7 @@ const CARD =
   "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015] p-6 transition-colors duration-300 hover:border-vibe-cyan/30 sm:p-8";
 
 const VOUCHER_ICONS: LucideIcon[] = [Plane, BedDouble, TrainFront];
-const PICK_ICONS: LucideIcon[] = [Route, Store, Wallet];
+const PICK_ICONS: LucideIcon[] = [Route, Heart, Gift];
 
 export default function UspBentoSection({ dict }: { dict: Dictionary["bento"] }) {
   const { ai, ocr, care, pick } = dict;
@@ -207,7 +208,7 @@ function PushRow({ icon: Icon, title, sub }: { icon: LucideIcon; title: string; 
   );
 }
 
-/** One node of the share -> marketplace -> wallet flow, preceded by an arrow (except the first). */
+/** One node of the share -> likes/adoptions -> reward flow, preceded by an arrow (except the first). */
 function FlowStep({
   icon: Icon,
   label,

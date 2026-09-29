@@ -139,12 +139,12 @@ const en: Dictionary = {
     },
     pick: {
       tag: "Vibe Pick",
-      title: "Turn your trip into a product in our C2C marketplace",
-      body: "Share the trip you took on Vibe Pick and other travelers can use your itinerary. Creator rebates build up in your wallet every time it's used.",
+      title: "Share great itineraries, get rewarded for them",
+      body: "Share the trip you took on Vibe Pick. When your itinerary gets lots of likes and adoptions from other travelers, Vibe Trip rewards you with prizes and perks.",
       nodes: [
         { label: "My itinerary", sub: "Share after your trip" },
-        { label: "Vibe Pick", sub: "Used by other travelers" },
-        { label: "Rebate Wallet", sub: "Earnings accrue" },
+        { label: "Likes · Adoptions", sub: "Other travelers respond" },
+        { label: "Prizes · Rewards", sub: "For top itineraries" },
       ],
     },
   },
@@ -190,17 +190,17 @@ const en: Dictionary = {
       },
       {
         phase: "Post-Trip",
-        label: "Marketplace Sharing · Earnings",
-        summary: "Share your trip and collect rebates",
-        title: "Your finished trip becomes the next traveler's product",
+        label: "Itinerary Sharing · Rewards",
+        summary: "Share your trip and get rewarded",
+        title: "Your finished trip becomes the next traveler's guide",
         points: [
           {
             title: "Share on Vibe Pick",
-            body: "Post the itinerary from your trip to Vibe Pick, our C2C marketplace.",
+            body: "Post the itinerary from your trip to Vibe Pick, our itinerary-sharing marketplace.",
           },
           {
-            title: "Creator Rebate Wallet",
-            body: "When your itinerary is used, rebates are credited to your wallet.",
+            title: "Rewards for likes & adoptions",
+            body: "Itineraries with lots of likes and adoptions earn prizes and rewards from Vibe Trip.",
           },
         ],
       },
@@ -223,9 +223,11 @@ const en: Dictionary = {
       post: {
         itineraryTitle: "Osaka 4-day food route",
         pickTag: "Vibe Pick",
-        description: "Share your itinerary on the marketplace and other travelers can use it as is.",
-        walletTitle: "Rebate Wallet",
-        walletSub: "Credited when your itinerary is used",
+        description: "Share your itinerary and other travelers can like it and adopt it as is.",
+        likes: "Likes",
+        adoptions: "Adoptions",
+        rewardTitle: "Prizes · Rewards",
+        rewardSub: "For itineraries with the most likes and adoptions",
       },
     },
   },
@@ -305,9 +307,9 @@ const en: Dictionary = {
           "You're connected automatically to the service that fits the country. Uber covers Korea and global regions, and Grab covers six Southeast Asian countries: Vietnam, Thailand, Singapore, Malaysia, the Philippines, and Indonesia.",
       },
       {
-        question: "How do I earn on Vibe Pick?",
+        question: "What do I get for sharing on Vibe Pick?",
         answer:
-          "Share a trip you've taken on Vibe Pick, our C2C marketplace, and creator rebates are credited to your wallet whenever another traveler uses your itinerary. Detailed settlement terms follow the in-app guidelines.",
+          "Share a trip you've taken on Vibe Pick and other travelers can like your itinerary or adopt it for their own trip. Vibe Trip gives prizes or rewards to the authors of itineraries with the most likes and adoptions. Selection criteria, timing, and detailed terms follow the in-app guidelines.",
       },
       {
         question: "Is the patent granted?",
