@@ -216,6 +216,7 @@ const legalEn: LegalContent = {
             type: "ol",
             items: [
               "The Company may select, through events, Members whose itineraries on Vibe Pick have been adopted by many other Members, and provide them with Rewards such as trip passes or prizes. The eligible period, selection criteria and Rewards are set out in each event notice.",
+              "Adoptions of official itineraries registered by the Company, and a Member’s adoption of their own itinerary, are not counted, and repeated adoptions of the same itinerary by the same Member count as one.",
               "No monetary earnings (rebates) accrue from adoptions, and nothing is paid out or withdrawn in cash on that basis.",
               "Where providing a prize gives rise to obligations such as tax withholding under applicable tax law, the Company will set out the required information and procedure in advance in the relevant event notice.",
               "Where the number of adoptions has been inflated by improper means such as multiple accounts or macros, the Company may exclude the Member from selection or recover Rewards already provided.",
